@@ -16,12 +16,10 @@ class Board:
         size = self.size
         lines = []
 
-        # Rows and columns
         for i in range(size):
             lines.append(self.grid[i])  # rows
             lines.append([self.grid[r][i] for r in range(size)])  # columns
 
-        # Diagonals
         lines.append([self.grid[i][i] for i in range(size)])
         lines.append([self.grid[i][size - i - 1] for i in range(size)])
 

@@ -1,7 +1,7 @@
 import socket
 
 class Server:
-    def __init__(self, host="localhost", port=8000):
+    def __init__(self, host="172.17.42.153", port=8000):
         self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server_socket.bind((host, port))
         print(f"[SERVER STARTED] Listening on {host}:{port}")
