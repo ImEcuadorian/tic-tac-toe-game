@@ -31,6 +31,7 @@ class GameScreen:
         self.winner_text = None
         self.alpha = 0
         self.running = True
+        self.client.send(f"hello:{player_name}")
 
     def receive_message(self, message):
         if message.startswith("move:"):
