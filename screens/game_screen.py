@@ -108,5 +108,10 @@ class GameScreen:
             self.screen.fill(BLACK)
             self.draw_board()
             self.draw_status()
+            if self.winner_text:
+                self.board.reset()
+                self.draw_board()
+                self.draw_status()
+
             pygame.display.flip()
             self.clock.tick(60)
