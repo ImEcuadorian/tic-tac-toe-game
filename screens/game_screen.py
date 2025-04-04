@@ -49,6 +49,10 @@ class GameScreen:
             row, col = map(int, pos.split(","))
             self.board.make_move(row, col, self.enemy_symbol)
             self.player.is_turn = True
+        elif message == "reset":
+            # Reiniciar el tablero si el oponente gana/empata
+            self.winner_text = "New Game"
+            self.reset_timer = pygame.time.get_ticks() + 2000
 
     def send_move(self, row, col):
         self.client.send(f"move:{row},{col}")
@@ -99,10 +103,12 @@ class GameScreen:
             winner = self.board.check_winner()
             if winner:
                 self.winner_text = "You Win!" if winner == self.player.symbol else "You Lose!"
-                self.reset_timer = pygame.time.get_ticks() + 3000  # 3 segundos
+                self.reset_timer = pygame.time.get_ticks() + 3000
+                self.client.send("reset")  # 🔁
             elif self.board.is_draw():
                 self.winner_text = "Draw!"
                 self.reset_timer = pygame.time.get_ticks() + 3000
+                self.client.send("reset")
 
     def run(self):
         while self.running:
