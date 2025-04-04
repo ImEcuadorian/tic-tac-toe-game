@@ -33,6 +33,16 @@ class GameScreen:
         self.running = True
         self.client.send(f"hello:{player_name}")
 
+        self.reset_timer = None  # En milisegundos
+
+    def reset_game(self):
+        self.board.reset()
+        self.winner_text = None
+        self.alpha = 0
+        self.reset_timer = None
+        self.player.is_turn = self.symbol == "X"  # Turno inicial según símbolo
+
+
     def receive_message(self, message):
         if message.startswith("move:"):
             pos = message.replace("move:", "")
@@ -80,6 +90,7 @@ class GameScreen:
     def handle_click(self, pos):
         if not self.player.is_turn or self.winner_text:
             return
+
         x, y = pos
         row, col = y // CELL_SIZE, x // CELL_SIZE
 
@@ -88,10 +99,10 @@ class GameScreen:
             winner = self.board.check_winner()
             if winner:
                 self.winner_text = "You Win!" if winner == self.player.symbol else "You Lose!"
-                self.board.reset()
+                self.reset_timer = pygame.time.get_ticks() + 3000  # 3 segundos
             elif self.board.is_draw():
                 self.winner_text = "Draw!"
-                self.board.reset()
+                self.reset_timer = pygame.time.get_ticks() + 3000
 
     def run(self):
         while self.running:
@@ -110,3 +121,5 @@ class GameScreen:
             self.draw_status()
             pygame.display.flip()
             self.clock.tick(60)
+            if self.reset_timer and pygame.time.get_ticks() >= self.reset_timer:
+                self.reset_game()
