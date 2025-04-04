@@ -88,8 +88,10 @@ class GameScreen:
             winner = self.board.check_winner()
             if winner:
                 self.winner_text = "You Win!" if winner == self.player.symbol else "You Lose!"
+                self.board.reset()
             elif self.board.is_draw():
                 self.winner_text = "Draw!"
+                self.board.reset()
 
     def run(self):
         while self.running:

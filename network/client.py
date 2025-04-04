@@ -19,7 +19,6 @@ class Client:
         def receive_loop():
             while self.running:
                 try:
-                    print("[CLIENT] Waiting to receive...")
                     data, _ = self.socket.recvfrom(1024)
                     if self.on_message:
                         self.on_message(data.decode())
