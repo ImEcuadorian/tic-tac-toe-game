@@ -41,9 +41,15 @@ class GameScreen:
         self.handle_first_move(is_host)
         self.is_player = is_player
 
-    def handle_first_move(self, is_player):
-        if is_player:
-            self.client.send("first")
+    def handle_first_move(self, is_host):
+        if is_host:
+            self.random_row = random.randint(0, 2)
+            self.random_col = random.randint(0, 2)
+            self.board.make_move(self.random_row, self.random_col, self.symbol)
+            self.send_move(self.random_row, self.random_col)
+            self.player.is_turn = False
+        else:
+            self.player.is_turn = True
 
 
 
@@ -67,10 +73,10 @@ class GameScreen:
         elif message == "reset":
             self.winner_text = "New Game"
             self.reset_timer = pygame.time.get_ticks() + 2000
-        elif message == "first":
-            # El cliente recibe el primer movimiento del host
-            self.board.make_move(self.random_row, self.random_col, self.symbol)
-            self.send_move(self.random_row, self.random_col)
+        elif message.startswith("first:"):
+            pos = message.replace("first:", "")
+            row, col = map(int, pos.split(","))
+            self.board.make_move(row, col, self.enemy_symbol)
             self.player.is_turn = True
 
     def send_move(self, row, col):
