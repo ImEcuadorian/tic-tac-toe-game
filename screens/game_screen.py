@@ -37,8 +37,11 @@ class GameScreen:
         self.reset_timer = None  # En milisegundos
         self.random_row = random.randint(0, 2)
         self.random_col = random.randint(0, 2)
-        self.board.make_move(self.random_row, self.random_col, self.symbol)
-        self.send_move(self.random_row, self.random_col)
+        self.first_move = True
+        if self.symbol == "X" and self.player.is_turn and self.first_move:
+            self.board.make_move(self.random_row, self.random_col, self.symbol)
+            self.send_move(self.random_row, self.random_col)
+            self.first_move = False
 
     def reset_game(self):
         self.board.reset()
