@@ -16,7 +16,7 @@ CELL_SIZE = 200
 FONT = pygame.font.SysFont(None, 60)
 
 class GameScreen:
-    def __init__(self, screen, player_name, is_host):
+    def __init__(self, screen, player_name, is_host, is_player):
         self.screen = screen
         self.first_move = True
         self.clock = pygame.time.Clock()
@@ -39,15 +39,14 @@ class GameScreen:
         self.random_row = random.randint(0, 2)
         self.random_col = random.randint(0, 2)
         self.handle_first_move(is_host)
+        self.is_player = is_player
 
     def handle_first_move(self, is_host):
         is_first_move = self.symbol == "X" and self.player.is_turn
         if is_first_move:
             self.board.make_move(self.random_row, self.random_col, self.symbol)
-            self.send_move(self.random_row, self.random_col)
-        elif not is_host:
-            self.board.make_move(self.random_row, self.random_col, self.enemy_symbol)
-            self.send_move(self.random_row, self.random_col)
+            if self.player:
+                self.send_move(self.random_row, self.random_col)
 
 
     def reset_game(self):

@@ -71,10 +71,10 @@ class MenuScreen:
                         self.active = False
 
                     if self.host_button.collidepoint(event.pos):
-                        return {"name": self.name, "host": True}
+                        return {"name": self.name, "host": True, "player": False}
 
                     if self.join_button.collidepoint(event.pos):
-                        return {"name": self.name, "host": False}
+                        return {"name": self.name, "host": False, "player": True}
 
                 if event.type == pygame.KEYDOWN and self.active:
                     if event.key == pygame.K_RETURN:

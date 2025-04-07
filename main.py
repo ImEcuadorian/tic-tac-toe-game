@@ -26,9 +26,10 @@ def main():
     # Step 2: Start game
     name = config["name"]
     is_host = config["host"]
+    is_player = config["player"]
 
     print(f"Starting game as {'Host' if is_host else 'Client'} - Name: {name}")
-    game = GameScreen(screen, name, is_host)
+    game = GameScreen(screen, name, is_host, is_player)
     game.run()
 
 if __name__ == "__main__":
