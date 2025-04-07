@@ -41,13 +41,10 @@ class GameScreen:
         self.handle_first_move(is_host)
         self.is_player = is_player
 
-    def handle_first_move(self, is_host):
+    def handle_first_move(self, is_player):
         is_first_move = self.symbol == "X" and self.player.is_turn
         if is_first_move:
             self.board.make_move(self.random_row, self.random_col, self.symbol)
-            self.send_move(self.random_row, self.random_col)
-        elif not is_host:
-            self.board.make_move(self.random_row, self.random_col, self.enemy_symbol)
             self.send_move(self.random_row, self.random_col)
 
 
@@ -58,7 +55,7 @@ class GameScreen:
         self.alpha = 0
         self.reset_timer = None
         self.player.is_turn = self.symbol == "X"
-        self.handle_first_move(is_host=self.player.is_turn)
+        self.handle_first_move(self.is_player)
 
 
 

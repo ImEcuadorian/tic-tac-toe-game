@@ -11,10 +11,8 @@ class Server:
         while True:
             data, addr = self.server_socket.recvfrom(1024)
             message = data.decode()
-
-
             if addr not in self.players:
-                if len(self.players) != 2:
+                if len(self.players) < 2:
                     self.players.append(addr)
                     print(f"[PLAYER CONNECTED] {addr}")
                 else:
@@ -25,7 +23,7 @@ class Server:
 
             # Send message to the other player
             for player in self.players:
-                if player != addr and len(self.players) == 2:
+                if player != addr:
                     self.server_socket.sendto(data, player)
 
 if __name__ == "__main__":
