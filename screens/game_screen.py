@@ -1,4 +1,5 @@
 # screens/game_screen.py
+import random
 
 import pygame
 from core.board import Board
@@ -34,6 +35,10 @@ class GameScreen:
         self.client.send(f"hello:{player_name}")
 
         self.reset_timer = None  # En milisegundos
+        self.random_row = random.randint(0, 2)
+        self.random_col = random.randint(0, 2)
+        self.board.make_move(self.random_row, self.random_col, self.symbol)
+        self.send_move(self.random_row, self.random_col)
 
     def reset_game(self):
         self.board.reset()
