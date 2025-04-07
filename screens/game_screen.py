@@ -42,7 +42,7 @@ class GameScreen:
         self.is_player = is_player
 
     def handle_first_move(self, is_player):
-        is_first_move = self.symbol == "X" and self.player.is_turn
+        is_first_move = self.symbol == "X" and not self.player.is_turn
         if is_first_move:
             self.board.make_move(self.random_row, self.random_col, self.symbol)
             self.send_move(self.random_row, self.random_col)
