@@ -45,8 +45,11 @@ class GameScreen:
         is_first_move = self.symbol == "X" and self.player.is_turn
         if is_first_move:
             self.board.make_move(self.random_row, self.random_col, self.symbol)
-            if self.player:
-                self.send_move(self.random_row, self.random_col)
+            self.send_move(self.random_row, self.random_col)
+        elif not is_host:
+            self.board.make_move(self.random_row, self.random_col, self.enemy_symbol)
+            self.send_move(self.random_row, self.random_col)
+
 
 
     def reset_game(self):
