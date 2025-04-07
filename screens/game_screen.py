@@ -36,18 +36,18 @@ class GameScreen:
         self.client.send(f"hello:{player_name}")
 
         self.reset_timer = None  # En milisegundos
-        self.random_row = random.randint(0, 2)
-        self.random_col = random.randint(0, 2)
         self.handle_first_move(is_host)
 
     def handle_first_move(self, is_host):
+        random_row = random.randint(0, 2)
+        random_col = random.randint(0, 2)
         is_first_move = self.symbol == "X" and self.player.is_turn
         if is_first_move:
-            self.board.make_move(self.random_row, self.random_col, self.symbol)
-            self.send_move(self.random_row, self.random_col)
+            self.board.make_move(random_row, random_col, self.symbol)
+            self.send_move(random_row, random_col)
         elif not is_host:
-            self.board.make_move(self.random_row, self.random_col, self.enemy_symbol)
-            self.send_move(self.random_row, self.random_col)
+            self.board.make_move(random_row, random_col, self.enemy_symbol)
+            self.send_move(random_row, random_col)
 
 
     def reset_game(self):
