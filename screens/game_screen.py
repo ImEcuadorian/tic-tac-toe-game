@@ -46,12 +46,10 @@ class GameScreen:
             self.random_row = random.randint(0, 2)
             self.random_col = random.randint(0, 2)
             self.board.make_move(self.random_row, self.random_col, self.symbol)
-            self.send_move(self.random_row, self.random_col)
+            self.client.send(f"first:{self.random_row},{self.random_col}")
             self.player.is_turn = False
         else:
             self.player.is_turn = True
-
-
 
     def reset_game(self):
         self.board.reset()
@@ -60,9 +58,6 @@ class GameScreen:
         self.reset_timer = None
         self.player.is_turn = self.symbol == "X"
         self.handle_first_move(self.is_player)
-
-
-
 
     def receive_message(self, message):
         if message.startswith("move:"):
