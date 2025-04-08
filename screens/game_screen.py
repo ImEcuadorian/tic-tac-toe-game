@@ -19,6 +19,7 @@ class GameScreen:
     def __init__(self, screen, player_name, is_host, is_player):
         self.screen = screen
         self.first_move = True
+        self.game_started = False
         self.clock = pygame.time.Clock()
         self.board = Board()
 
@@ -43,6 +44,8 @@ class GameScreen:
 
     def handle_first_move(self, is_host):
         if is_host:
+            while not self.game_started:
+                pygame.time.wait(100)  #
             self.random_row = random.randint(0, 2)
             self.random_col = random.randint(0, 2)
             self.board.make_move(self.random_row, self.random_col, self.symbol)
@@ -73,6 +76,9 @@ class GameScreen:
             row, col = map(int, pos.split(","))
             self.board.make_move(row, col, self.enemy_symbol)
             self.player.is_turn = True
+        elif message == "start":
+            print("[CLIENT] Both players connected, starting game.")
+            self.game_started = True
 
     def send_move(self, row, col):
         self.client.send(f"move:{row},{col}")

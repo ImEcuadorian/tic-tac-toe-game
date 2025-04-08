@@ -26,8 +26,10 @@ class Server:
 
             if self.both_connected:
                 # Send message to the other player
+                self.both_connected = True
                 for player in self.players:
                     if player != addr:
+                        self.server_socket.sendto("start".encode(), player)
                         self.server_socket.sendto(data, player)
 
 if __name__ == "__main__":
